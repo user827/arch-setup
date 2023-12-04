@@ -1,0 +1,13 @@
+#!/bin/sh
+set -eu
+
+#TODO tmps to one folder
+# use traps?
+
+# TODO class object is the script
+#   NOTE lazy init problems
+
+aurmatic -Su "$@"
+echo
+echo OLD FILES STILL IN USE
+afteruplsof

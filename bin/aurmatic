@@ -1,0 +1,48 @@
+#!/bin/bash
+set -eu
+
+# Should be run by as an unprivileged user who has
+# - sudo rights
+# - home dir
+
+
+#NOTE should be root owned but user readable
+#TODO in multiple places
+aurlogs=/var/log/aurup
+
+. /usr/lib/shlib/logs.sh
+. /usr/lib/shlib/utils.sh
+
+yay() {
+  # TODO logdest does not work
+  set -- VISUAL=vim LOGDEST="$aurlogs" yay -a --builddir /var/cache/aurup/yay --nosudoloop --answerclean None --answerdiff All "$@"
+  # needs bash
+  shellstr=$(printf '%q ' "$@")
+  # needs to preserve path
+  # WTF! the bash doesn't source startup files if started as -bash unless NON_INTERACTIVE_LOGIN_SHELL was defined build time...
+  # TODO -l not universal? -> using bash already
+  _RET=0
+  runbuilder /bin/bash -l -c "$shellstr" || _RET=$?
+
+}
+
+runbuilder() {
+  # TODO need to setup home etc...
+  runas builder "$@"
+}
+
+runbuilder test -w "/var/cache/aurup/yay" || fail "/var/cache/aurup/yay is missing or not writable"
+
+command -v etckeeper > /dev/null || fail etckeeper not installed
+
+cd /tmp
+yay "$@"
+for arg; do
+  case "$arg" in
+    -*S*|-*Y*)
+      pacdiff
+      break
+      ;;
+  esac
+done
+exit "$_RET"

@@ -1,0 +1,8 @@
+[Unit]
+Description=Update pacman mirrorlist
+After=network.target nss-lookup.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/lib/mysystem/reflector
+TimeoutStartSec=10m

@@ -1,0 +1,7 @@
+#!/bin/sh
+set -eu
+
+# warning: insecure path
+
+user=$SUDO_USER
+exec /usr/bin/setpriv --regid "$user" --reuid "$user" --keep-groups -- "$@"

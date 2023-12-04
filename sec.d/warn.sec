@@ -1,0 +1,6 @@
+type=SingleWithSuppress
+ptype=SubStr
+pattern=kernel: EDAC
+window=5
+desc=EDAC: Correctable Error
+action=pipe '%t: $0' /usr/bin/mail -S mime-encoding=8bit -n -s "sec: %s" root

@@ -1,0 +1,12 @@
+[Unit]
+Description=Update pacman mirrorlist daily
+
+[Timer]
+OnCalendar=daily
+Persistent=true
+AccuracySec=1h
+# TODO should be variable
+RandomizedDelaySec=8h
+
+[Install]
+WantedBy=timers.target

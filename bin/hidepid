@@ -1,0 +1,20 @@
+#!/bin/sh
+set -eu
+
+# disallow program to read all of /proc
+
+groups=
+for g in $(/usr/bin/groups); do
+  [ "$g" = root ] && continue
+  [ "$g" = proc ] && continue
+  if [ -n "$groups" ]; then
+    groups=$groups,$g
+  else
+    groups=$g
+  fi
+done
+
+user=$SUDO_USER
+unset SUDO_COMMAND SUDO_GID SUDO_UID USERNAME SUDO_USER
+
+exec /usr/bin/setpriv --regid "$user" --reuid "$user" --groups "$groups" -- "$@"

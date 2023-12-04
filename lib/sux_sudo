@@ -1,0 +1,18 @@
+#!/bin/sh
+set -eu
+
+sux_xauth_list=$XAUTHORIZATION
+unset XAUTHORIZATION
+
+# Remove the old cookies. They may cause trouble if we transfer only one
+# cookie, e.g. an MIT cookie, and there's still a stale XDM cookie hanging
+# around.
+# Note that there may be more than one cookie to transfer
+{
+  printf %s\\n "remove $DISPLAY"
+  printf %s\\n "$sux_xauth_list" | sed 's/.*/add &/'
+} | xauth -q
+
+
+# suppress builtin lookup
+( exec "$@" )

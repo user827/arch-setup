@@ -1,0 +1,24 @@
+#!/bin/bash
+set -eu
+
+#TODO do in c
+
+# Easy to allow in sudoers
+#TODO assert user in sudoers
+user=$1
+shift
+#TODO --tmpdir safe?
+rundir=/run/myjail
+[ -d "$rundir" ] || mkdir -m 755 "$rundir"
+[ -d "$rundir/$user" ] || mkdir -m 700 "$rundir/$user"
+chown "$user": "$rundir/$user"
+
+tmp=$(mktemp -d -p "$rundir/$user" jail.XXXXXXXXX)
+#hangs trap 'rm -r "$tmp"' 0
+
+chown "$user": "$tmp"
+
+# Use mount namespace to hide X
+#TODO should use ipc too?
+#TODO any command before this makes this hang...
+exec unshare -u -i -m -n -- /usr/lib/mysystem/myjail.sh "$user" "$tmp" "$@"

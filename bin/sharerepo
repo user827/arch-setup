@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+name=${1%.git}.git
+cd /srv/git
+mkdir -m 770 "$name"
+cd "$name"
+git init --bare --shared=0660
+chgrp -R users .
+echo "Now able to receive a push into:"
+echo "/srv/git/$name"

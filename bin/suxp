@@ -1,0 +1,54 @@
+#!/bin/sh
+set -eu
+
+sux_operation=run
+#sux_login=-s
+sux_opts=
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -p)
+      sux_operation=copy
+      ;;
+    -E|-H|-i)
+      sux_opts="$sux_opts $1"
+      ;;
+    *)
+      break
+      ;;
+  esac
+  shift
+done
+
+if [ "$#" = 0 ]; then
+  sux_user=root
+else
+  sux_user=$1
+  shift
+  if [ "$sux_operation" = copy ] && [ $# -gt 0 ]; then
+    echo "suxp does not take other args with -p" >&2
+    exit 1
+  fi
+fi
+
+if [ "$sux_operation" = copy ]; then
+  sux_xauth_list=$(xauth list "$DISPLAY")
+  unset XAUTHORITY
+  # Remove the old cookies. They may cause trouble if we transfer only one
+  # cookie, e.g. an MIT cookie, and there's still a stale XDM cookie hanging
+  # around.
+  # Note that there may be more than one cookie to transfer
+  {
+    echo remove "$DISPLAY"
+    printf %s\\n "$sux_xauth_list" | sed 's/.*/add &/'
+  } | sudo -u "$sux_user" $sux_opts xauth -q
+else
+  # Sudo might preserve XAUTHORITY which is a problem with unprivileged user
+  unset XAUTHORITY
+
+  if [ $# = 0 ]; then
+    shell=$(getent passwd "$sux_user" | cut -d: -f7)
+    exec sudo -u "$sux_user" $sux_opts -- env DISPLAY="$DISPLAY" "$shell"
+  else
+    exec sudo -u "$sux_user" $sux_opts -- env DISPLAY="$DISPLAY" "$@"
+  fi
+fi

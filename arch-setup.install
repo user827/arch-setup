@@ -1,0 +1,34 @@
+post_install() {
+  cat <<EOF
+For full ooperation:
+  systemctl enable postfix
+
+  for t in aur myreflector; do
+    sudo systemctl enable \$t.timer
+    sudo systemctl start \$t.timer
+  done
+
+Optionally:
+    sudo systemctl enable sec-journal.service sec-journal-warn.service
+    sudo systemctl start sec-journal.service sec-journal-warn.service
+
+Should:
+  install etckeeper and init it
+
+Ensure hidepid is configured for /proc
+EOF
+
+cd /etc
+if ! [ -f /etc/sec.d/suppress ]; then
+  touch /etc/sec.d/suppress
+  chmod 644  /etc/sec.d/suppress
+fi
+}
+
+post_upgrade() {
+  post_install $1
+}
+
+post_remove() {
+  echo goups and users not removed
+}

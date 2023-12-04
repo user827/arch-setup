@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eu
+
+# might have changed the mirror so double y... but probably not and so what?
+pacmatic -Syu "$@"
+echo
+echo OLD FILES STILL IN USE
+afteruplsof

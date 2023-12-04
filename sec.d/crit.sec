@@ -1,0 +1,54 @@
+type=Single
+ptype=SubStr
+pattern=SEC_STARTUP
+context=SEC_INTERNAL_EVENT
+desc=Load the SecStuff module
+action=eval %ret (require '/usr/lib/mysystem/SecStuff.pm'); \
+       if %ret ( none ) else ( eval %o exit(1) )
+
+
+
+type=Suppress
+ptype=PerlFunc
+pattern=sub { return SecStuff::my_match($_[0]); }
+desc=suppressed
+
+# XXX might give info about failed auth too soon
+type=EventGroup
+ptype=RegExp
+pattern= .+\[([0-9]+)\]: pam_unix\(.+:auth\): conversation failed
+context=!SUPPRESS_AUTH
+count=create GOTCONV_$1 1; pipe '%t: $0' /usr/bin/mail -S mime-encoding=8bit -n -s "sec: %s" root
+desc=auth
+action=create SUPPRESS_AUTH
+thresh=4
+window=5
+end=delete SUPPRESS_AUTH
+
+type=Single
+ptype=RegExp
+pattern= .+\[([0-9]+)\]: pam_unix\(.+:auth\): conversation failed
+context=SUPPRESS_AUTH
+action=create GOTCONV_$1 1
+desc=suppress_auth
+
+type=Suppress
+ptype=regexp
+pattern= .+\[([0-9]+)\]: pam_unix\(.+:auth\): auth could not identify password for \[\w+\]
+context=GOTCONV_$1
+desc=suppress_auth2
+
+type=Suppress
+ptype=regexp
+pattern= .+\[([0-9]+)\]:\s+\w+ : \d+ incorrect password attempt
+context=GOTCONV_$1
+desc=suppress_auth3
+
+type=SingleWithSuppress
+context=!SEC_INTERNAL_EVENT
+ptype=RegExp
+pattern=.*
+window=5
+desc=event
+action=pipe '%t: $0' /usr/bin/mail -S mime-encoding=8bit -n -s "sec: %s" root
+

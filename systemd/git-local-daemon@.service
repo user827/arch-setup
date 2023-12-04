@@ -1,0 +1,11 @@
+[Unit]
+Description=Git Daemon Instance
+
+[Service]
+User=git
+# The '-' is to ignore non-zero exit statuses
+# allow only push
+ExecStart=-/usr/lib/git-core/git-daemon --inetd --export-all --base-path=/srv/git --disable=upload-pack --enable=receive-pack
+StandardInput=socket
+StandardOutput=inherit
+StandardError=journal

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -eu
+
+echo ------------- Deleted libraries -------------
+lof=$(lsof -b -w -n +c 0)
+#Show old files still in use after upgrade
+printf '%s\n' "$lof" | awk '/DEL.*lib/ { print $1 ": " $NF }' | sort -u
+#no all columns present lsof -n +c 0 | awk '$5 == "DEL" && $0 ~ "lib" { print $1 ": " $NF }' | sort -u
+echo ------------- Deleted binaries -------------
+printf '%s\n' "$lof" | awk '/txt.*deleted/ { print $1 ": " $(NF-1) " " $NF }' | sort -u

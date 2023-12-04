@@ -1,0 +1,57 @@
+#!/bin/sh
+set -eu
+
+sux_untrusted=untrusted
+sux_login=
+timeout="60"
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --no-timeout)
+      timeout='172800'
+      shift ;;
+    -)
+      sux_login=-i
+      shift
+      ;;
+    -t)
+      sux_untrusted=trusted
+      timeout='1800'
+      shift
+      ;;
+    --)
+      shift
+      break ;;
+    *)
+      break ;;
+  esac
+done
+if [ "$#" = 0 ]; then
+  sux_user=root
+else
+  sux_user=$1
+  shift
+fi
+
+# Create untrusted cookie
+sux_tmpfile=$(mktemp --tmpdir sux.XXXXXXXXXX)
+if [ "$sux_untrusted" = untrusted ]; then
+  echo "Creating an untrusted cookie (timeout $timeout)"
+  xauth -f "$sux_tmpfile" generate "$DISPLAY" . "$sux_untrusted" timeout "$timeout"
+else
+  echo "Allowing clients to screencap display (timeout $timeout)"
+  xauth -f "$sux_tmpfile" generate "$DISPLAY" . "$sux_untrusted" timeout "$timeout"
+  #sux_xauth_nextract=$(xauth nextract - "$DISPLAY")
+fi
+XAUTHORIZATION=$(xauth -f "$sux_tmpfile" list "$DISPLAY")
+rm "$sux_tmpfile"
+export XAUTHORIZATION
+
+
+
+# Sudo might preserve XAUTHORITY which is a problem with unprivileged user
+unset XAUTHORITY
+
+if [ "$#" = 0 ]; then
+  set -- "$(getent passwd "$sux_user" | cut -d: -f7)"
+fi
+exec sudo -Au "$sux_user" $sux_login -- /usr/lib/mysystem/sux_sudo -- "$@"

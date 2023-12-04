@@ -1,0 +1,9 @@
+[Unit]
+Description=sec daemon for journal
+After=basic.target
+
+[Service]
+ExecStart=/usr/lib/mysystem/sec.sh
+
+[Install]
+WantedBy=multi-user.target

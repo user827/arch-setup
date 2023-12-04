@@ -1,0 +1,26 @@
+#!/bin/bash
+set -eu
+
+if [[ ${1:-} != --force ]]; then
+  for d in /etc/netns/*; do
+    [[ -d $d ]] || continue
+    for f in "$d"/*; do
+      [[ -f $f ]] || continue
+      if /usr/bin/mountpoint -q "/etc/${f#"$d/"}"; then
+        # because we are in mount namespace too and we don't know what the
+        # default mount namespace whould be for our application
+        echo "cannot change to default net namespace from ip netns namespace"
+        exit 1
+      else
+        break
+      fi
+    done
+  done
+fi
+
+if [[ $EUID = 0 ]]; then
+  exec /usr/bin/nsenter -t 1 -n -- "$@"
+else
+  # need fullpath for sudo configs to apply
+  exec /usr/bin/sudo /usr/bin/nsenter -t 1 -n /usr/bin/setcuruser "$@"
+fi

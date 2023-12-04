@@ -1,0 +1,11 @@
+#!/bin/sh
+set -eu
+
+. /usr/lib/shlib.sh
+
+#TODO sudo with a different shell gives permission denied
+out=$(aurmatic -Qu --devel) || exit 0
+[ -n "$out" ] || exit 0
+notice_sd "Updates available!"
+
+printf '%s\n\n%s\n' 'Subject: Aur updates available' "$out" | sendmail root

@@ -1,0 +1,38 @@
+#!/bin/sh
+
+video=~/Desktop/saver.vid
+image=~/Desktop/saver
+
+while true; do
+  # only opengl-hq + display resample rpevents tearing
+  if [ -e "$video" ]; then
+    mpv \
+      --shuffle \
+      --vo=gpu \
+      --no-config \
+      --profile=gpu-hq \
+      --video-sync=display-resample \
+      --loop-playlist=inf \
+      --no-input-terminal \
+      --really-quiet \
+      --no-stop-screensaver \
+      --wid="${XSCREENSAVER_WINDOW}" \
+      --no-audio \
+      -- \
+      "$video"
+    else
+      mpv \
+        --vo=gpu \
+        --no-config \
+        --profile=gpu-hq \
+        --video-sync=display-resample \
+        --pause \
+        --no-input-terminal \
+        --really-quiet \
+        --no-stop-screensaver \
+        --wid="${XSCREENSAVER_WINDOW}" \
+        --no-audio \
+        -- \
+        "$image"
+  fi
+done

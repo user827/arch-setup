@@ -1,0 +1,19 @@
+#!/bin/sh
+set -eu
+
+defaultnsinode=$(ls -Li /proc/1/ns/net | cut -d' ' -f1)
+mynsinode=$(ls -Li /proc/self/ns/net | cut -d' ' -f1)
+if [ "$defaultnsinode" != "$mynsinode" ]; then
+  # systemd hooks scripts require us to be in the default ns
+  echo 'need to be in the default network ns' >&2
+  exit 1
+fi
+pacman "$@"
+for arg; do
+  case "$arg" in
+    -*S*|-*U*)
+      pacdiff
+      break
+      ;;
+  esac
+done

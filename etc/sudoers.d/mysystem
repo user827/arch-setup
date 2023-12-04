@@ -1,0 +1,22 @@
+# Hardenings from ubuntu
+Defaults        !env_editor, editor="/usr/bin/vim:/usr/bin/vi"
+Defaults        ignore_dot
+Defaults        secure_path="/usr/local/bin:/usr/bin"
+
+# Use_pty sends sighup to processes that fork without getting off of their controlling terminal
+# eg. grlearn...
+# grlearn is protected task and normally won't receive the sighup but sudo is too fast in this case
+# trying to disallow access to our terminal from root apps is futile anyways so disable this
+#Defaults>root !use_pty
+
+Cmnd_Alias SUX_SUDO = /usr/lib/mysystem/sux_sudo *
+Defaults!SUX_SUDO env_keep += DISPLAY
+
+builder ALL=(root) NOPASSWD: NOSETENV: /usr/bin/pacman, /usr/local/bin/pacmatic -U [!-]*
+
+Cmnd_Alias MYNETJAIL = /usr/bin/unshare -n -- /usr/lib/mysystem/mynetjail.sh *
+Cmnd_Alias AN = /usr/bin/nsenter -t 1 -n /usr/bin/setcuruser *
+
+# ensure these run on bash and not some interpreter affected by the dangerous variables
+Defaults!MYNETJAIL, AN, /usr/bin/nohidepid, /usr/bin/hidepid !env_reset, !secure_path, !requiretty, closefrom_override, !use_pty, !pam_session, !set_logname, preserve_groups, closefrom=9000
+# env_delete-=PERL5LIB
