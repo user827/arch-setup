@@ -3,6 +3,7 @@
 pkgname=arch-setup
 pkgver=1.0.0.r1.g6972a4b
 pkgrel=1
+pkgdesc='A collection of Arch linux system settings'
 arch=('any')
 depends=(bash yay shlib pacman-contrib reflector awk smtp-server smtp-forwarder util-linux coreutils systemd lsof
     git)
