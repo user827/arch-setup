@@ -1,0 +1,30 @@
+#!/bin/sh
+set -eu
+
+if [ "$1" = --export ]; then
+  gpg --homedir /usr/share/grubkeys  --batch --no-tty --local-user sb --export
+  exit 0
+fi
+
+if [ "$1" = --verify ]; then
+  gpg --homedir /usr/share/grubkeys --local-user sb --verify "$2"
+  exit 0
+fi
+
+if [ "$1" = --sign-all ]; then
+  for f in /boot/vmlinuz* /boot/*.img; do
+    [ -f "$f" ] || continue
+    [ "${f%.sig}" = "$f" ] || continue
+    grubsign "$f"
+  done
+  exit 0
+fi
+
+file=$1
+if [ -f "$file.sig" ]; then
+  echo "overwriting signature of $file"
+  rm "$file.sig"
+else
+  echo "signing $file"
+fi
+gpg --homedir /usr/share/grubkeys --batch --no-tty --local-user sb --detach-sign "$file"

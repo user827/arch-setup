@@ -15,7 +15,7 @@ aurlogs=/var/log/aurup
 
 yay() {
   # TODO logdest does not work
-  set -- VISUAL=vim LOGDEST="$aurlogs" yay -a --builddir /var/cache/aurup/yay --nosudoloop --answerclean None --answerdiff All "$@"
+  set -- VISUAL=vim LOGDEST="$aurlogs" yay -a --builddir /var/cache/aurup/yay --sudoloop=false --answerclean None --answerdiff All "$@"
   # needs bash
   shellstr=$(printf '%q ' "$@")
   # needs to preserve path
