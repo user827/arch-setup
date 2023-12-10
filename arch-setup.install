@@ -1,19 +1,17 @@
 post_install() {
   cat <<EOF
 For full ooperation:
-  systemctl enable postfix
+  systemctl enable postfix smartd
 
   for t in aur myreflector; do
-    sudo systemctl enable \$t.timer
-    sudo systemctl start \$t.timer
+    systemctl enable \$t.timer
+    systemctl start \$t.timer
   done
 
-Optionally:
-    sudo systemctl enable sec-journal.service sec-journal-warn.service
-    sudo systemctl start sec-journal.service sec-journal-warn.service
+  systemctl enable sec-journal.service sec-journal-warn.service
+  systemctl start sec-journal.service sec-journal-warn.service
 
-Should:
-  install etckeeper and init it
+  etckeeper init
 
 Ensure hidepid is configured for /proc
 EOF
