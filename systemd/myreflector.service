@@ -4,5 +4,5 @@ After=network.target nss-lookup.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/lib/mysystem/reflector
+ExecStart=/usr/lib/arch-setup/reflector
 TimeoutStartSec=10m

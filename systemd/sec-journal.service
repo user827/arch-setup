@@ -3,7 +3,7 @@ Description=sec daemon for journal
 After=basic.target
 
 [Service]
-ExecStart=/usr/lib/mysystem/sec.sh
+ExecStart=/usr/lib/arch-setup/sec.sh
 
 [Install]
 WantedBy=multi-user.target

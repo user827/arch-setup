@@ -3,7 +3,7 @@ Description=sec daemon for journal (warn)
 After=basic.target
 
 [Service]
-ExecStart=/usr/lib/mysystem/secwarn.sh
+ExecStart=/usr/lib/arch-setup/secwarn.sh
 
 [Install]
 WantedBy=multi-user.target

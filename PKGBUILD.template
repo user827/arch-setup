@@ -61,12 +61,12 @@ package() {
   mkdir -p "$pkgdir"/usr/local/bin
   install -D -m755 local/bin/* "$pkgdir"/usr/local/bin/
 
-  mkdir -p "$pkgdir"/usr/lib/mysystem
-  install -D -m755 lib/* "$pkgdir"/usr/lib/mysystem/
+  mkdir -p "$pkgdir"/usr/lib/arch-setup
+  install -D -m755 lib/* "$pkgdir"/usr/lib/arch-setup/
 
   mkdir -m 755 "$pkgdir"/etc
   mkdir -m 700 "$pkgdir"/etc/sudoers.d
-  install -m600 etc/sudoers.d/mysystem "$pkgdir"/etc/sudoers.d/"$pkgname"
+  install -m600 sudoers.d/arch-setup "$pkgdir"/etc/sudoers.d/"$pkgname"
   install -d -m 755 "$pkgdir"/etc/security/limits.d
   install -m600 limits.d/user.conf "$pkgdir"/etc/security/limits.d/"$pkgname".user.conf
 

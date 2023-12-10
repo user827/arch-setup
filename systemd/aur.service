@@ -4,5 +4,5 @@ After=network.target nss-lookup.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/lib/mysystem/aur
+ExecStart=/usr/lib/arch-setup/aur
 TimeoutStartSec=5m

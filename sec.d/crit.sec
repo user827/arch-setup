@@ -3,7 +3,7 @@ ptype=SubStr
 pattern=SEC_STARTUP
 context=SEC_INTERNAL_EVENT
 desc=Load the SecStuff module
-action=eval %ret (require '/usr/lib/mysystem/SecStuff.pm'); \
+action=eval %ret (require '/usr/lib/arch-setup/SecStuff.pm'); \
        if %ret ( none ) else ( eval %o exit(1) )
 
 

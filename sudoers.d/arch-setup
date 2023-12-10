@@ -9,12 +9,12 @@ Defaults        secure_path="/usr/local/bin:/usr/bin"
 # trying to disallow access to our terminal from root apps is futile anyways so disable this
 #Defaults>root !use_pty
 
-Cmnd_Alias SUX_SUDO = /usr/lib/mysystem/sux_sudo *
+Cmnd_Alias SUX_SUDO = /usr/lib/arch-setup/sux_sudo *
 Defaults!SUX_SUDO env_keep += DISPLAY
 
 builder ALL=(root) NOPASSWD: NOSETENV: /usr/bin/pacman, /usr/local/bin/pacmatic -U [!-]*
 
-Cmnd_Alias MYNETJAIL = /usr/bin/unshare -n -- /usr/lib/mysystem/mynetjail.sh *
+Cmnd_Alias MYNETJAIL = /usr/bin/unshare -n -- /usr/lib/arch-setup/mynetjail.sh *
 Cmnd_Alias AN = /usr/bin/nsenter -t 1 -n /usr/bin/setcuruser *
 
 # ensure these run on bash and not some interpreter affected by the dangerous variables

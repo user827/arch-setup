@@ -21,4 +21,4 @@ chown "$user": "$tmp"
 # Use mount namespace to hide X
 #TODO should use ipc too?
 #TODO any command before this makes this hang...
-exec unshare -u -i -m -n -- /usr/lib/mysystem/myjail.sh "$user" "$tmp" "$@"
+exec unshare -u -i -m -n -- /usr/lib/arch-setup/myjail.sh "$user" "$tmp" "$@"

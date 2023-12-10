@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+# Run an X program as an another user.
+
 sux_untrusted=untrusted
 sux_login=
 timeout="60"
@@ -54,4 +56,4 @@ unset XAUTHORITY
 if [ "$#" = 0 ]; then
   set -- "$(getent passwd "$sux_user" | cut -d: -f7)"
 fi
-exec sudo -Au "$sux_user" $sux_login -- /usr/lib/mysystem/sux_sudo -- "$@"
+exec sudo -Au "$sux_user" $sux_login -- /usr/lib/arch-setup/sux_sudo -- "$@"
