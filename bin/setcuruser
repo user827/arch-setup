@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+# Set user back to the one who called sudo
+
 # warning: insecure path
 
 user=$SUDO_USER

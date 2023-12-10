@@ -24,10 +24,7 @@ if ! [ -f /etc/sec.d/suppress ]; then
   chmod 644  /etc/sec.d/suppress
 fi
 
-if ! [ -f /usr/share/grubkeys/pubring.kbx ]; then
-  mkdir -m700 /usr/share/grubkeys
-  gpg --homedir /usr/share/grubkeys --batch --no-tty --passphrase '' --quick-gen-key sb rsa4096 default never
-fi
+grubsign --init
 }
 
 post_upgrade() {

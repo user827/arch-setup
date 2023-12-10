@@ -1,13 +1,26 @@
 #!/bin/sh
 set -eu
 
+gpguser=sb
+gpghome=/usr/share/grubkeys
+
 if [ "$1" = --export ]; then
-  gpg --homedir /usr/share/grubkeys  --batch --no-tty --local-user sb --export
+  gpg --homedir "$gpghome"  --batch --no-tty --local-user "$gpguser" --export
   exit 0
 fi
 
 if [ "$1" = --verify ]; then
-  gpg --homedir /usr/share/grubkeys --local-user sb --verify "$2"
+  gpg --homedir "$gpghome" --local-user "$gpguser" --verify "$2"
+  exit 0
+fi
+
+if [ "$1" = --init ]; then
+  if ! [ -f "$gpghome"/pubring.kbx ]; then
+    mkdir -m700 "$gpghome"
+    gpg --homedir "$gpghome" --batch --no-tty --passphrase '' --quick-gen-key "$gpguser" rsa4096 default never
+  else
+    echo "grubsign already initialized" >&2
+  fi
   exit 0
 fi
 
@@ -20,6 +33,10 @@ if [ "$1" = --sign-all ]; then
   exit 0
 fi
 
+if [ "$1" = -- ]; then
+  shift
+fi
+
 file=$1
 if [ -f "$file.sig" ]; then
   echo "overwriting signature of $file"
@@ -27,4 +44,4 @@ if [ -f "$file.sig" ]; then
 else
   echo "signing $file"
 fi
-gpg --homedir /usr/share/grubkeys --batch --no-tty --local-user sb --detach-sign "$file"
+gpg --homedir "$gpghome" --batch --no-tty --local-user "$gpguser" --detach-sign "$file"
