@@ -5,8 +5,10 @@ pkgver=1.0.0.r1.g6972a4b
 pkgrel=1
 pkgdesc='A collection of Arch linux system settings'
 arch=('any')
-depends=(bash yay shlib pacman-contrib reflector awk smtp-server smtp-forwarder util-linux coreutils systemd lsof
-    git)
+depends=(
+    bash yay shlib pacman-contrib reflector awk smtp-server smtp-forwarder
+    util-linux coreutils systemd lsof git audit
+)
 optdepends=(
     etckeeper
     sec
@@ -64,7 +66,9 @@ package() {
   mkdir -p "$pkgdir"/usr/lib/arch-setup
   install -D -m755 lib/* "$pkgdir"/usr/lib/arch-setup/
 
-  mkdir -m 755 "$pkgdir"/etc
+  mkdir -m 755 "$pkgdir"/etc "$pkgdir"/etc/audit "$pkgdir"/etc/audit/rules.d
+  install -D -m644 audit.d/* "$pkgdir"/etc/audit/rules.d/
+
   mkdir -m 700 "$pkgdir"/etc/sudoers.d
   install -m600 sudoers.d/arch-setup "$pkgdir"/etc/sudoers.d/"$pkgname"
   install -d -m 755 "$pkgdir"/etc/security/limits.d
