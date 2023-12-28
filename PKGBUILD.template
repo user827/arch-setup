@@ -67,10 +67,7 @@ package() {
   mkdir -p "$pkgdir"/usr/lib/arch-setup
   install -D -m755 lib/* "$pkgdir"/usr/lib/arch-setup/
 
-  mkdir -p "$pkgdir"/etc/pacman.d/hooks
-  install -D -m755 pacman.d.hooks/* "$pkgdir"/etc/pacman.d/hooks
-
-  mkdir -m 755 "$pkgdir"/etc/audit "$pkgdir"/etc/audit/rules.d
+  mkdir -m 755 "$pkgdir"/etc "$pkgdir"/etc/audit "$pkgdir"/etc/audit/rules.d
   install -D -m644 audit.d/* "$pkgdir"/etc/audit/rules.d/
 
   mkdir -m 700 "$pkgdir"/etc/sudoers.d

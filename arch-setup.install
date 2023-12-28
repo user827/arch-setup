@@ -21,8 +21,6 @@ if ! [ -f /etc/sec.d/suppress ]; then
   touch /etc/sec.d/suppress
   chmod 644  /etc/sec.d/suppress
 fi
-
-grubsign --init
 }
 
 post_upgrade() {
