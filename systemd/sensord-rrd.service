@@ -1,0 +1,13 @@
+[Unit]
+Description=Log hardware monitoring data
+After=lm_sensors.service
+
+[Service]
+EnvironmentFile=/etc/conf.d/sensord
+Type=forking
+PIDFile=/run/sensord.pid
+ExecStart=/usr/sbin/sensord -i $INTERVAL -l $LOG_INTERVAL -f daemon \
+          --load-average --rrd-file /var/log/sensord.rrd
+
+[Install]
+WantedBy=multi-user.target

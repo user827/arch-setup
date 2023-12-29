@@ -1,22 +1,20 @@
 post_install() {
   cat <<EOF
-For full ooperation:
+For full operation:
   systemctl enable postfix smartd
 
   for t in aur myreflector; do
-    systemctl enable \$t.timer
-    systemctl start \$t.timer
+    systemctl enable --now \$t.timer
   done
 
-  systemctl enable sec-journal.service sec-journal-warn.service
-  systemctl start sec-journal.service sec-journal-warn.service
+  systemctl enable --now sensord-rrd.service mylighttpd.service
+  systemctl enable --now sec-journal.service sec-journal-warn.service
 
   etckeeper init
 
 Ensure hidepid is configured for /proc
 EOF
 
-cd /etc
 if ! [ -f /etc/sec.d/suppress ]; then
   touch /etc/sec.d/suppress
   chmod 644  /etc/sec.d/suppress
@@ -28,5 +26,5 @@ post_upgrade() {
 }
 
 post_remove() {
-  echo goups and users not removed
+  echo groups and users not removed
 }
