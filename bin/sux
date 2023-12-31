@@ -46,14 +46,14 @@ else
 fi
 XAUTHORIZATION=$(xauth -f "$sux_tmpfile" list "$DISPLAY")
 rm "$sux_tmpfile"
-export XAUTHORIZATION
+#export XAUTHORIZATION
 
 
 
 # Sudo might preserve XAUTHORITY which is a problem with unprivileged user
-unset XAUTHORITY
+#unset XAUTHORITY
 
 if [ "$#" = 0 ]; then
   set -- "$(getent passwd "$sux_user" | cut -d: -f7)"
 fi
-exec sudo -Au "$sux_user" $sux_login -- /usr/lib/arch-setup/sux_sudo -- "$@"
+exec sudo -Au "$sux_user" $sux_login -- env -u XAUTHORITY XAUTHORIZATION="$XAUTHORIZATION" /usr/lib/arch-setup/sux_sudo -- "$@"
