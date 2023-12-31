@@ -2,5 +2,5 @@ type=SingleWithSuppress
 ptype=SubStr
 pattern=apparmor="DENIED"
 window=30
-desc=apparmor denied
+desc=Apparmor denied
 action=pipe '%t: $0' /usr/bin/mail -S mime-encoding=8bit -n -s "sec: %s" root

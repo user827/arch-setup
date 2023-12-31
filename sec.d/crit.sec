@@ -19,7 +19,7 @@ ptype=RegExp
 pattern= .+\[([0-9]+)\]: pam_unix\(.+:auth\): conversation failed
 context=!SUPPRESS_AUTH
 count=create GOTCONV_$1 1; pipe '%t: $0' /usr/bin/mail -S mime-encoding=8bit -n -s "sec: %s" root
-desc=auth
+desc=Authentication error
 action=create SUPPRESS_AUTH
 thresh=4
 window=5
@@ -49,6 +49,6 @@ context=!SEC_INTERNAL_EVENT
 ptype=RegExp
 pattern=.*
 window=30
-desc=event
+desc=System error
 action=pipe '%t: $0' /usr/bin/mail -S mime-encoding=8bit -n -s "sec: %s" root
 
