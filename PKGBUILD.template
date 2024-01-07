@@ -6,7 +6,7 @@ pkgrel=1
 pkgdesc='A collection of Arch linux system settings'
 arch=('any')
 depends=(
-    yay shlib pacman-contrib reflector smtp-server smtp-forwarder
+    yay shlib pacman-contrib reflector smtp-forwarder
     lsof audit smartmontools etckeeper sec lm_sensors lighttpd
 )
 makedepends=(
