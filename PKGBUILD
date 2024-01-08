@@ -12,9 +12,6 @@ depends=(
 makedepends=(
     git
 )
-optdepends=(
-    courier-maildrop
-)
 backup=(
     etc/sec.d/crit.sec
     etc/security/limits.d/"$pkgname".user.conf

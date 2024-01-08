@@ -1,7 +1,7 @@
 post_install() {
   cat <<EOF
 For full operation:
-  systemctl enable postfix smartd
+  systemctl enable postfix smartd auditd
 
   for t in aur myreflector; do
     systemctl enable --now \$t.timer
