@@ -8,11 +8,11 @@ For full operation:
   done
 
   systemctl enable --now sensord-rrd.service mylighttpd.service
-  systemctl enable --now sec-journal.service sec-journal-warn.service
+  systemctl enable --now sec-journal.service sec-journal-warn.service sec-audit.service
 
   etckeeper init
 
-Ensure hidepid is configured for /proc
+Optionally, configure hidepid for /proc
 EOF
 
 if ! [ -f /etc/sec.d/suppress ]; then

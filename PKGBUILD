@@ -1,7 +1,7 @@
 # Maintainer: me
 
 pkgname=arch-setup
-pkgver=1.0.0.r1.g6972a4b
+pkgver=1.0.0.r25.g4d42a31
 pkgrel=1
 pkgdesc='A collection of Arch linux system settings'
 arch=('any')
@@ -48,8 +48,6 @@ package() {
   mkdir -p "$pkgdir"/usr/lib/systemd/system
   #install -D -m644 systemd/* "$pkgdir"/usr/lib/systemd/system/
   (cd systemd && find -type f -exec install -m644 -D '{}' "$pkgdir"/usr/lib/systemd/system/'{}' \; )
-  mkdir -p "$pkgdir"/usr/lib/systemd/system/timers.target.wants
-  ln -s ../myreflector.timer "$pkgdir"/usr/lib/systemd/system/timers.target.wants/
 
   mkdir -p "$pkgdir"/usr/lib/sysusers.d
   install -D -m644 sysusers.d/* "$pkgdir"/usr/lib/sysusers.d/

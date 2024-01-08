@@ -1,0 +1,8 @@
+[Unit]
+Description=sec daemon for auditd
+
+[Service]
+ExecStart=/usr/bin/sec --input=/var/log/audit/audit.log --conf=/etc/sec.d/audit.sec --debug=4 --syslog=local0
+
+[Install]
+WantedBy=multi-user.target
