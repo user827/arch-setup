@@ -10,6 +10,8 @@ For full operation:
   systemctl enable --now sensord-rrd.service mylighttpd.service
   systemctl enable --now sec-journal.service sec-journal-warn.service sec-audit.service
 
+  systemctl enable --now ras-mc-ctl.service rasdaemon.service
+
   etckeeper init
 
 Optionally, configure hidepid for /proc
