@@ -1,7 +1,7 @@
 # Maintainer: me
 
 pkgname=arch-setup
-pkgver=1.0.0.r25.g4d42a31
+pkgver=1.0.0.r28.gf3dfeaa
 pkgrel=1
 pkgdesc='A collection of Arch linux system settings'
 arch=('any')

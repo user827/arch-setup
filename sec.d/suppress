@@ -1,0 +1,6 @@
+ \w+\[\d+\]: sec suppress test$
+ authproto_pam\[\d+\]: pam_unix\(system-auth:auth\): conversation failed$
+ authproto_pam\[\d+\]: pam_unix\(system-auth:auth\): auth could not identify password for \[\w+\]$
+ Failed to lock home directories
+ Freezing user space processes failed after
+ Failed to start System Suspend.
