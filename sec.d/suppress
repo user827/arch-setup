@@ -4,3 +4,6 @@
  Failed to lock home directories
  Freezing user space processes failed after
  Failed to start System Suspend.
+ Failed to load link keys for hci0
+ ACPI BIOS Error \(bug\): Could not resolve symbol
+ ACPI Error: Aborting method
