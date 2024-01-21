@@ -69,7 +69,7 @@ package() {
   install -D -m644 audit.d/* "$pkgdir"/etc/audit/rules.d/
 
   mkdir -m 700 "$pkgdir"/etc/sudoers.d
-  install -m600 sudoers.d/arch-setup "$pkgdir"/etc/sudoers.d/"$pkgname"
+  install -m600 sudoers.d/* "$pkgdir"/etc/sudoers.d/
   install -d -m 755 "$pkgdir"/etc/security/limits.d
   install -m600 limits.d/user.conf "$pkgdir"/etc/security/limits.d/"$pkgname".user.conf
 
