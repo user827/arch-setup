@@ -1,14 +1,14 @@
 # Maintainer: me
 
 pkgname=arch-setup
-pkgver=1.0.0.r35.g9c9eec4
+pkgver=1.0.0.r37.gc9827b1
 pkgrel=1
 pkgdesc='A collection of Arch linux system settings'
 arch=('any')
 depends=(
     yay shlib pacman-contrib reflector smtp-forwarder s-nail
     lsof audit smartmontools etckeeper sec lm_sensors rrdtool lighttpd
-    rasdaemon sysstat
+    rasdaemon sysstat man
 )
 makedepends=(
     git
