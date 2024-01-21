@@ -4,7 +4,7 @@ After=syslog.target network.target
 
 [Service]
 PrivateTmp=true
-ExecStart=/usr/bin/lighttpd-angel -D -f /etc/lighttpd/lighttpd.conf
+ExecStart=/usr/bin/lighttpd-angel -D -f /etc/lighttpd/mylighttpd.conf
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
 

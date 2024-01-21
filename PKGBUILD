@@ -1,7 +1,7 @@
 # Maintainer: me
 
 pkgname=arch-setup
-pkgver=1.0.0.r34.g387c345
+pkgver=1.0.0.r35.gad0e639
 pkgrel=1
 pkgdesc='A collection of Arch linux system settings'
 arch=('any')
@@ -98,7 +98,9 @@ package() {
   mkdir -m755 "$pkgdir"/var/cache/aurup/yay
   chown -R "${builder_uid}:$builder_gid" "$pkgdir"/var/cache/aurup
 
-  mkdir -m755 "$pkgdir"/srv "$pkgdir"/srv/myhttp
+  mkdir -m755 "$pkgdir"/srv "$pkgdir"/srv/myhttp "$pkgdir"/srv/myhttp/sensord
+  chown 33:33 "$pkgdir"/srv/myhttp/sensord
+  install -m644 http/* "$pkgdir"/srv/myhttp/
 }
 
 # vim: filetype=PKGBUILD
