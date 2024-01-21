@@ -15,3 +15,4 @@ makepkg --install --syncdeps
 ```
 sensord --load-average --rrd-file /var/log/sensord.rrd --rrd-cgi /srv/myhttp/sensord > index.rrdcgi
 ```
+Use `rrdinfo` to see which metrics are available
