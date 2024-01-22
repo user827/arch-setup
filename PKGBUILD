@@ -8,7 +8,7 @@ arch=('any')
 depends=(
     yay shlib pacman-contrib reflector smtp-forwarder s-nail
     lsof audit smartmontools etckeeper sec lm_sensors rrdtool lighttpd
-    rasdaemon sysstat man htop
+    rasdaemon sysstat man htop edac-utils
 )
 makedepends=(
     git
