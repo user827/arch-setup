@@ -1,5 +1,0 @@
-#!/bin/sh
-
-# Run a program with only the loop network interface
-
-exec /usr/bin/sudo /usr/bin/unshare -n -- /usr/lib/arch-setup/mynetjail.sh "$@"

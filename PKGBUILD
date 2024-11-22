@@ -8,10 +8,11 @@ arch=('any')
 depends=(
     yay shlib pacman-contrib reflector smtp-forwarder s-nail
     lsof audit smartmontools etckeeper sec lm_sensors rrdtool lighttpd
-    rasdaemon sysstat man htop edac-utils
+    rasdaemon sysstat man htop
 )
 makedepends=(
     git
+    edac-utils
 )
 backup=(
     etc/sec.d/crit.sec
@@ -60,8 +61,8 @@ package() {
   mkdir -p "$pkgdir"/usr/local/bin
   install -D -m755 local/bin/* "$pkgdir"/usr/local/bin/
 
-  mkdir -p "$pkgdir"/usr/lib/arch-setup
-  install -D -m755 lib/* "$pkgdir"/usr/lib/arch-setup/
+  mkdir -p "$pkgdir/usr/lib/$pkgname/"
+  install -D -m755 lib/* "$pkgdir/usr/lib/$pkgname/"
 
   mkdir -m 755 "$pkgdir"/etc
   (cd etc && find -type f -exec install -m644 -D '{}' "$pkgdir"/etc/'{}' \; )
@@ -70,6 +71,7 @@ package() {
 
   mkdir -m 700 "$pkgdir"/etc/sudoers.d
   install -m600 sudoers.d/* "$pkgdir"/etc/sudoers.d/
+
   install -d -m 755 "$pkgdir"/etc/security/limits.d
   install -m600 limits.d/user.conf "$pkgdir"/etc/security/limits.d/"$pkgname".user.conf
 

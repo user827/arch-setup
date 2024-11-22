@@ -14,13 +14,8 @@ Defaults!SUX_SUDO env_keep += DISPLAY
 
 builder ALL=(root) NOPASSWD: NOSETENV: /usr/bin/pacman, /usr/local/bin/pacmatic -U [!-]*
 
-Cmnd_Alias MYNETJAIL = /usr/bin/unshare -n -- /usr/lib/arch-setup/mynetjail.sh *
-Cmnd_Alias AN = /usr/bin/nsenter -t 1 -n /usr/bin/setcuruser *
-
 # ensure these run on bash and not some interpreter affected by the dangerous variables
-Defaults!MYNETJAIL, AN, /usr/bin/nohidepid, /usr/bin/hidepid !env_reset, !secure_path, !requiretty, closefrom_override, !use_pty, !pam_session, !set_logname, preserve_groups, closefrom=9000
+Defaults!/usr/bin/nohidepid, /usr/bin/hidepid !env_reset, !secure_path, !requiretty, closefrom_override, !use_pty, !pam_session, !set_logname, preserve_groups, closefrom=9000
 # env_delete-=PERL5LIB
 
-%users ALL=(root) NOPASSWD: AN
-%users ALL=(root) NOPASSWD: MYNETJAIL
 %users ALL=(root) NOPASSWD: /usr/bin/hidepid
