@@ -12,6 +12,8 @@ depends=(
 )
 makedepends=(
     git
+)
+optdepends=(
     edac-utils
 )
 backup=(
